@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home – Campus Lost & Found</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="page-header">
+  <span class="icon">🏫</span>
+  <h1>Campus <span>Lost & Found</span></h1>
+  <p>What would you like to do today?</p>
+</div>
+
+<div class="user-bar">
+  <span>👋 Hey, <strong id="userName">...</strong>!</span>
+  <button class="btn-logout" onclick="logout()">Sign out</button>
+</div>
+
+<div class="home-grid">
+  <a href="lost-form.html" class="home-card lost">
+    <div class="card-icon">🔦</div>
+    <div class="card-label">Report Lost</div>
+    <div class="card-sub">Lost something?</div>
+  </a>
+  <a href="found-form.html" class="home-card found">
+    <div class="card-icon">📣</div>
+    <div class="card-label">Report Found</div>
+    <div class="card-sub">Found something?</div>
+  </a>
+  <a href="lost-list.html" class="home-card view-lost">
+    <div class="card-icon">📋</div>
+    <div class="card-label">Lost Items</div>
+    <div class="card-sub">Browse all lost</div>
+  </a>
+  <a href="found-list.html" class="home-card view-found">
+    <div class="card-icon">📦</div>
+    <div class="card-label">Found Items</div>
+    <div class="card-sub">Browse all found</div>
+  </a>
+</div>
+
+<script>
+  const userId = localStorage.getItem("userId");
+  const userName = localStorage.getItem("userName");
+  if (!userId) window.location.href = "login.html";
+  document.getElementById("userName").textContent = userName || "Student";
+
+  function logout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
+    window.location.href = "login.html";
+  }
+</script>
+</body>
+</html>
