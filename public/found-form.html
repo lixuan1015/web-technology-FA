@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Report Found Item – Campus Lost & Found</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<a href="home.html" class="btn-back">← Back to Home</a>
+
+<div class="page-header">
+  <span class="icon">📣</span>
+  <h1>Report <span>Found Item</span></h1>
+  <p>Help someone get their item back</p>
+</div>
+
+<div class="card">
+  <form id="foundForm">
+    <div class="form-group">
+      <label for="title">Item Title</label>
+      <input type="text" id="title" name="title" placeholder="e.g. Blue Water Bottle" required>
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Describe the item in detail..." required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="location">Where did you find it?</label>
+      <input type="text" id="location" name="location" placeholder="e.g. Cafeteria Table 5" required>
+    </div>
+    <div class="form-group">
+      <label for="date">Date Found</label>
+      <input type="date" id="date" name="date" required>
+    </div>
+    <div class="form-group">
+      <label for="contact">Contact (email or phone)</label>
+      <input type="text" id="contact" name="contact" placeholder="e.g. 0123456789" required>
+    </div>
+    <input type="hidden" name="category" value="Found">
+    <button type="submit" class="btn btn-primary">Submit Report →</button>
+  </form>
+</div>
+
+<script>
+  const userId = localStorage.getItem("userId");
+  if (!userId) { alert("Please login first"); window.location.href = "login.html"; }
+
+  document.getElementById("foundForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    formData.append("user_id", userId);
+    const data = Object.fromEntries(formData.entries());
+
+    const res = await fetch("/api/items", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      alert("Found item reported successfully!");
+      window.location.href = "found-list.html";
+    } else {
+      alert("Something went wrong. Please try again.");
+    }
+  });
+</script>
+</body>
+</html>
